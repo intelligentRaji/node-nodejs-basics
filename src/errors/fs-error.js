@@ -1,7 +1,8 @@
 import { CustomError } from './error.js';
 
 export class FSError extends CustomError {
-  constructor() {
-    super('FS operation failed', 'FSError');
+  constructor(err = {}) {
+    err.message = 'FS operation failed';
+    super(err);
   }
 }
