@@ -1,5 +1,3 @@
-const parseArgs = () => {
-    // Write your code here 
-};
+const parseArgs = () => {};
 
 parseArgs();
