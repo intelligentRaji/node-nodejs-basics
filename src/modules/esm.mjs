@@ -1,15 +1,19 @@
-import { sep } from 'path';
+import { sep, join } from 'path';
 import { release, version } from 'os';
 import { createServer } from 'http';
+import { read } from '../utils/read.js';
+
 await import('./files/c.js');
 
 const getJSON = async (path) => {
-  await import(path, { with: { type: 'json' } });
+  const data = await read(path);
+
+  return JSON.parse(data);
 };
 
 const { dirname, filename } = import.meta;
 
-const path = Math.random() > 0.5 ? './files/a.json' : './files/b.json';
+const path = join(dirname, Math.random() > 0.5 ? './files/a.json' : './files/b.json');
 
 export const data = await getJSON(path);
 
