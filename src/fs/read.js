@@ -1,22 +1,32 @@
 import { join } from 'path';
 import { createReadStream } from 'fs';
-import { stdout } from 'process';
 import { FSError } from '../errors/fs-error.js';
 
 const { dirname } = import.meta;
 
 const path = join(dirname, 'files', 'fileToRead.txt');
 
-const read = async (path) => {
-  const readStream = createReadStream(path);
+const read = (path) => {
+  return new Promise((resolve, reject) => {
+    const readStream = createReadStream(path);
 
-  readStream.on('error', (error) => {
-    if (error.code === 'ENOENT') {
-      throw new FSError(error);
-    }
+    let data = '';
+
+    readStream.on('error', (error) => {
+      if (error.code === 'ENOENT') {
+        reject(new FSError(error));
+      }
+    });
+
+    readStream.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    readStream.on('close', () => {
+      resolve(data);
+    });
   });
-
-  readStream.pipe(stdout);
 };
 
-await read(path);
+const data = await read(path);
+console.log(data);
