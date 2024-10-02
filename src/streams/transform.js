@@ -10,10 +10,6 @@ class ReverseStream extends Transform {
 
 const transform = () => {
   stdin.pipe(new ReverseStream()).pipe(stdout);
-
-  stdin.on('data', (message) => {
-    process.stdout.write(`${message}\n`);
-  });
 };
 
 transform();
