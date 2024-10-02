@@ -1,3 +1,4 @@
+import { FSError } from '../errors/fs-error.js';
 import { createReadStream } from 'fs';
 
 export const read = (path) => {
