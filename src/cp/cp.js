@@ -1,6 +1,15 @@
-const spawnChildProcess = async (args) => {
-    // Write your code here
+import { fork } from 'node:child_process';
+import { join } from 'node:path';
+
+const { dirname } = import.meta;
+
+const path = join(dirname, 'files', 'script.js');
+const args = ['asd', 'qwe'];
+
+const spawnChildProcess = (path, args) => {
+  const child = fork(path, args, { silent: true });
+  process.stdin.pipe(child.stdin);
+  child.stdout.pipe(process.stdout);
 };
 
-// Put your arguments in function call to test this functionality
-spawnChildProcess( /* [someArgument1, someArgument2, ...] */);
+spawnChildProcess(path, args);
