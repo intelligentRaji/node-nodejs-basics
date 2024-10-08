@@ -11,7 +11,7 @@ const performCalculations = () => {
     return;
   }
 
-  const workers = Array.from(cpus()).map((_, index) => createWorker(index + 1));
+  const workers = Array.from(cpus()).map((_, index) => createWorker(index + 10));
 
   return Promise.allSettled(workers).then((results) => results.map(handleWorkerResult));
 };
