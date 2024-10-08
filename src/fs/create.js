@@ -1,14 +1,14 @@
 import { createWriteStream } from 'fs';
 import { join } from 'path';
 import { FSError } from '../errors/fs-error.js';
-import { isFileExists } from '../utils/is-exists.js';
+import { isExists } from '../utils/is-exists.js';
 
 const { dirname } = import.meta;
 
-const path = join(dirname, 'fresh.txt');
+const path = join(dirname, 'files', 'fresh.txt');
 
 export const create = async (path) => {
-  if (!(await isFileExists(path))) {
+  if (await isExists(path)) {
     throw new FSError();
   }
 
